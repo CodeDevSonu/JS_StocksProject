@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LOGIN</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="John Doe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #background {
+            left: 100px;
+            height: 700px;
+            width: 90%;
+            position: relative;
+            background: url('images/Background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #loginImage #background_heading {
+            position: absolute;
+            top: 340px;
+            left: 350px;
+            height: 80px;
+            width: 260px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        #welcome_heading {
+            font-size: 18px;
+            text-align: left;
+            opacity: 1;
+        }
+
+        label {
+            opacity: 0.7;
+        }
+
+        #email {
+            width: 350px;
+        }
+
+        #myButton {
+            background-color: #1082b3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!--<div class="container">-->
+    <div class="row">
+        <div class="col-7" id="loginImage">
+            <img id="background" />
+            <img id="background_heading" src="images/White-logo.png" />
+        </div>
+        <div class="col-1"></div>
+        <div class="col-4 d-flex pl-0 align-items-center vh-100" id="loginForm">
+            <section>
+                <div>
+                    <a id="formLogo"><img src="images/logo.png" width="200" /></a>
+                    <p id="welcome_heading" class="text-dark pt-2">Welcome,Let's Get Started!</p>
+                </div>
+                <form class="needs-validation" novalidate>
+                    <div class="row mt-4">
+                        <div class="col-12 mb-3">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" id="email" required>
+                            <div class="valid-feedback ">
+                                Done!
+                            </div>
+                            <div class="invalid-feedback text-dark">
+                                Please enter valid Email address (Ex-abc@gmail.com).
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" maxlength="10" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required>
+                            <div class="valid-feedback">
+                                Done!
+                            </div>
+                            <div class="invalid-feedback text-dark">
+                                Please enter valid password.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn form-control mt-3" type="submit" id="myButton">Log in</button>
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+        </div>
+    </div>
+    <!-- </div>-->
+
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                        if (form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+
+                            var email = $("#email").val();
+                            var password = $("#password").val();
+                            sessionStorage.setItem("email", email);
+                            sessionStorage.setItem("password", password);
+
+                            var user = ["john Doe", "john@gmail.com", "John@1031"];
+                            var user1 = ["ram Chand", "ram@gmail.com", "Ram@1031"];
+                            var user2 = ["villy Roy", "villy@gmail.com", "Villy@1031"];
+                            var user3 = ["vicky Jan", "vicky@gmail.com", "Vicky@1031"];
+
+                            sessionStorage.setItem("user", JSON.stringify(user));
+                            user = JSON.parse(sessionStorage.getItem("user"));
+
+                            sessionStorage.setItem("user1", JSON.stringify(user1));
+                            user1 = JSON.parse(sessionStorage.getItem("user1"));
+
+                            sessionStorage.setItem("user2", JSON.stringify(user2));
+                            user2 = JSON.parse(sessionStorage.getItem("user2"));
+
+                            sessionStorage.setItem("user3", JSON.stringify(user3));
+                            user3 = JSON.parse(sessionStorage.getItem("user3"));
+
+                            var user_email = sessionStorage.getItem("email");
+                            var user_password = sessionStorage.getItem("password");
+                            if (user_email == user[1] && user_password == user[2]) {
+                                var displayuser = user[0];
+                                $("#username").append(displayuser);
+                                location.href = "dashboard.html";
+                            }
+                            else if (user_email == user1[1] && user_password == user1[2]) {
+                                var displayuser = user1[0];
+                                location.href = "dashboard.html";
+
+                            }
+                            else if (user_email == user2[1] && user_password == user2[2]) {
+                                var displayuser = user2[0];
+                                location.href = "dashboard.html";
+
+                            }
+                            else if (user_email == user3[1] && user_password == user3[2]) {
+                                var displayuser = user3[0];
+                                location.href = "dashboard.html";
+                            }
+                            else {
+                                alert("user login credential is not matching");
+                            }
+                        }
+                    }, false);
+                });
+            }, false);
+        })();
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>

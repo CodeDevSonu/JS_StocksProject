@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DASHBOARD</title>
+    <!--Jquery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- MDBootstrap Datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.js"></script>
+
+    <style>
+        .container-fluid 
+        {
+            background-color: #f6f6f6;
+        }
+
+        #tableHead 
+        {
+            background-color: black;
+            color: white;
+        }
+
+            #tableHead th 
+            {
+                font-weight: unset;
+            }
+                #tableHead th:first-child 
+                {
+                    border-radius: 5px 0 0 0;
+                }
+
+                #tableHead th:last-child 
+                {
+                    border-radius: 0 5px 0 0;
+                }
+            tbody td:first-child 
+            {
+                border-left: 1px solid lightgray;
+            }
+
+        tbody td:last-child 
+        {
+            border-right: 1px solid lightgray;
+        }
+        .dataTables_wrapper .dataTables_filter input
+        {
+            background-color:white;
+            width:350px;
+        }   
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <div  class="container-fluid" style="padding-left:110px;padding-right:110px;">
+        <div class="row">
+            <div class="col mt-1 mb-0">
+                <h3>DashBoard</h3>
+            </div>
+        </div>
+        <!--TABLE-->
+        <table id="paginationFullNumbers" class="table" width="100%">
+            <thead id="tableHead">
+                <tr>
+                    <th class="th-sm">
+                        Part Number
+                    </th>
+                    <th class="th-sm">
+                        InwareHouse
+                    </th>
+                    <th class="th-sm">
+                        Available
+                    </th>
+                    <th class="th-sm">
+                        C100
+                    </th>
+                    <th class="th-sm">
+                        C101
+                    </th>
+                    <th class="th-sm">
+                        C102
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr>
+                    <td>Stock Location</td>
+                    <td></td>
+                    <td></td>
+                    <td>On Water</td>
+                    <td>On Water</td>
+                    <td>In Production</td>
+                </tr>
+                <tr>
+                    <td>ETA Date</td>
+                    <td></td>
+                    <td></td>
+                    <td>01/08/2022</td>
+                    <td>02/05/2022</td>
+                    <td>05/04/2022</td>
+                </tr>
+                <tr>
+                    <td>BW-01-S-M</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>
+                        <a role="button" tabindex="0" class="btn popovers text-primary" data-toggle="popover"
+                           data-trigger="focus" data-placement="right"
+                           data-content="<b class='pr-1'>Assigned to</b><i class='fa fa-close pl-5'></i></b><br><span class='text-success'>Ordered : 3</span>   <span class='text-danger'>Assigned: 2</span><br><i class='fas fa-user text-danger'></i> Manuel Pimentel<br><hr><i class='fas fa-user text-danger'></i> Dave Ernst">
+                            3
+                        </a>
+                    </td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>BW-01-S-M</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>
+                        <a role="button" tabindex="0" class="btn popovers text-primary" data-toggle="popover" data-trigger="focus"
+                           data-placement="right"
+                           data-content="<b class='pr-1'>Assigned to</b><i class='fa fa-close pl-5'></i><br><span class='text-success'>Ordered : 3 </span>  <span class='text-danger'>Assigned: 2</span><br><i class='fas fa-user text-danger'></i> Manuel Pimentel<br><hr><i class='fas fa-user text-danger'></i> Dave Ernst">
+                            3
+                        </a>
+                    </td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>BW-01-S-M</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>
+                        <a role="button" tabindex="0" class="btn popovers text-primary" data-toggle="popover" data-trigger="focus"
+                           data-placement="right"
+                           data-content="<b class='pr-1'>Assigned to</b><i class='fa fa-close pl-5'></i><br><span class='text-success'>Ordered : 3</span>   <span class='text-danger'>Assigned: 2</span><br><i class='fas fa-user text-danger'></i> Manuel Pimentel<br><hr><i class='fas fa-user text-danger'></i> Dave Ernst">
+                            2
+                        </a>
+                    </td>
+                    <td>3</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td> ZK-01-S-M</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>
+                        <a role="button" tabindex="0" class="btn popovers text-primary" data-toggle="popover" data-trigger="focus"
+                           data-placement="right"
+                           data-content="<b class='pr-1'>Assigned to</b><i class='fa fa-close pl-5'></i><br><span class='text-success'>Ordered : 3</span>   <span class='text-danger'>Assigned: 2</span><br><i class='fas fa-user text-danger'></i> Manuel Pimentel<br><hr><i class='fas fa-user text-danger'></i> Dave Ernst">
+                            5
+                        </a>
+                    </td>
+                    <td>1</td>
+                    <td>2</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr></tr>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        $(function ()
+        {
+            $("#header").load("header.html");
+        });
+        $(function ()
+        {
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                sanitize: false
+            }); 
+        });
+        $.extend(true, $.fn.dataTable.defaults.oLanguage.oPaginate,
+            {
+            sNext: '<i class="fa fa-chevron-right" ></i>',
+            sPrevious: '<i class="fa fa-chevron-left" ></i>'
+        });
+        $(document).ready(function ()
+        {
+            $('#paginationFullNumbers').dataTable({
+                "paging": true,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bAutoWidth": false,
+                language: { search: '', searchPlaceholder:"Search here..." },
+            });
+        });
+    </script>
+    <!--popover cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <title>STOCK</title>
+    <!--Jquery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- MDBootstrap Datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.js"></script>
+    <!--popover cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .container-fluid 
+        {
+            background-color: #f6f6f6;
+        }
+
+        #tableHead 
+        {
+            background-color: black;
+            color: white;
+        }
+
+            #tableHead th 
+            {
+                font-weight: unset;
+            }
+
+                #tableHead th:first-child 
+                {
+                    border-radius: 5px 0 0 0;
+                }
+
+                #tableHead th:last-child 
+                {
+                    border-radius: 0 5px 0 0;
+                }
+        tbody td:first-child 
+        {
+            border-left: 1px solid lightgray;
+        }
+
+        tbody td:last-child 
+        {
+            border-right: 1px solid lightgray;
+        }
+
+        .dataTables_wrapper .dataTables_filter input 
+        {
+            background-color: white;
+            width: 350px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="container-fluid" style="padding-left:110px;padding-right:110px;">
+        <!--TABLE-->
+        <span class="table-add float-right mb-1">
+            <button type="button" class="btn bg-primary text-white" data-toggle="modal" data-target="#exampleModal">&#x2b; New</button>
+        </span>
+        <!--model for creat new row-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new Stock</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="myform">
+                            <div class="row">
+                                <div class=" col-6 p-2 ">
+                                    <lable for="stockName">Stock Name</lable>
+                                    <input type="text" class="form-control" id="sname" />
+                                </div>
+                                <div class="col-6 p-2 ">
+                                    <lable for="stockdate">Stock Date</lable>
+                                    <input type="date" class="form-control " id="date" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class=" col-6 p-2 ">
+                                        <lable for="stockstatus">Stock Status</lable>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="stack">Stock Status:</label>
+                                        <select class="company form-control" name="location">
+                                            <option name="location" value="On Production">On Production</option>
+                                            <option name="location" value="On Water">On Water</option>
+                                            <option name="location" value="Warehouse">In Warehouse</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" data-toggle="modal" data-target="#myModal2">
+                                        <i class="fa fa-plus-circle"></i>Add Part Number
+                                    </button>
+                                </div>
+                                <!--<div class="col-md-12 mb-3">
+                                    <a data-toggle="modal" href="#myModal2" class="btn btn-primary">Add Part</a>
+                                </div>-->
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <table class="table mt-2" id="sctockNewTab">
+                                        <thead id="tableHead">
+                                            <tr>
+                                                <th class="th-sm">
+                                                    Part Number
+                                                </th>
+                                                <th class="th-sm">
+                                                    Invoice#
+                                                </th>
+                                                <th class="th-sm">
+                                                    Ordered
+                                                </th>
+                                                <th class="th-sm">
+                                                    Notes
+                                                </th>
+                                                <th class="th-sm"></th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="parts">
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row ">
+                                    <div class="col ">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closestock">Cancel</button>
+                                        <input type="button" id="addStock" class="btn btn-primary para" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--second model-->
+        <div class="modal" id="myModal2" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Add Part Number</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="container"></div>
+                    <div class="modal-body">
+                        <form id="myform2">
+                            <div class="col-md-12 mb-3">
+                                <input type="text" class="form-control" name="partnum" id="partnum" placeholder="Part Number" required="required">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <input type="number" class="form-control" name="Ordered" id="Ordered" placeholder="Ordered" required="required">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <textarea class="form-control" id="note" name="note" placeholder="Notes" rows="3" required="required"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a data-dismiss="modal" class="btn" id="canclestockpart">Close</a>
+                        <button class="btn btn-primary btn-lg btn-block col-md-3 mb-3 " id="addstockpart"
+                                type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-1 mb-0">
+                <h3>Stock</h3>
+            </div>
+        </div>
+        <!--TABLE-->
+        <table id="tablestock" class="table" width="100%">
+            <thead id="tableHead">
+                <tr>
+                    <th class="th-sm">
+                        Stock Name
+                    </th>
+                    <th class="th-sm">
+                        ETA Date
+                    </th>
+                    <th class="th-sm">
+                        Stock Location
+                    </th>
+                    <th class="th-sm">
+                        Created By
+                    </th>
+                    <th class="th-sm">
+                        Created Date
+                    </th>
+                    <th class="th-sm">
+                        Notes
+                    </th>
+                    <th class="th-sm">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="stock">
+            </tbody>
+            <tfoot><tr></tr></tfoot>
+        </table>
+    </div>
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+        });
+        $(document).ready(function () {
+            /* Add Stock Button Check */
+            $("#addStock").click(function () {
+                var stockName = $("#sname").val();
+                var etaDate = $("#date").val();
+                var stockStatus = $('option[name="location"]:checked').val();
+               
+                if (stockName != "" && etaDate != "" && stockStatus != "") {
+                    if ($("#stock tr").length > 1) {
+                        stockdataad();
+                        $("#stock tbody").empty();
+                        $("#myModal").toggle();
+                        $("#myform")[0].reset();
+                        
+                    }
+                    else {
+                        stockdataad();
+                        $("#myModal").toggle();
+                        $("#myform")[0].reset();
+                    }
+                    
+                }
+                else {
+                    swal("Ooops!", "Fields are empty!", "warning");
+                }
+                
+            });
+            $("#closestock").click(function () {
+                $("#myform")[0].reset();
+                location.reload();
+            });
+            displaystockdata();
+            let editRowId;
+            let isEdit = false;
+            //var stock_data = [];
+            var partsArray = [];
+            var partstr;
+            /* To Store Stock Data into Local Storage */
+            stockdataad = function () {
+                stockarray = JSON.parse(localStorage.getItem("Stock-data")) ? JSON.parse(localStorage.getItem("Stock-data")) : [];
+                const stockName = $("#sname").val();
+                const etaDate = $("#date").val();
+                const stockStatus = $('option[name="location"]:checked').val();
+                let By = JSON.parse(sessionStorage.getItem('user'));
+                const createdBy = By[0];
+                var d = new Date();
+
+                var month = d.getMonth() + 1;
+                var day = d.getDate();
+
+                var createdDate = (day < 10 ? '0' : '') + day + '/' +
+                    (month < 10 ? '0' : '') + month + '/' +
+                    d.getFullYear();
+
+                
+                console.log(createdDate);
+                var note = "Notes ";
+                let stockvalue = {
+                    stockName: stockName,
+                    etaDate: etaDate,
+                    stockStatus: stockStatus,
+                    createdBy: createdBy,
+                    createdDate: createdDate,
+                    note: note,
+                    parts: partsArray
+                };
+                if (isEdit) {
+                    stockarray[editRowId] = stockvalue;
+                    localStorage.setItem("Stock-data", JSON.stringify(stockarray));
+                    isEdit = false;
+                }
+                else {
+                    stockarray.push(stockvalue);
+                    localStorage.setItem("Stock-data", JSON.stringify(stockarray));
+                }
+                displaystockdata();
+            };
+            /* To Fetch Stock Data from Local Storage and dispaly in table */
+            function displaystockdata() {
+                $("#stock").html = "";
+                let data = new Array();
+                let temp = '';
+                data = JSON.parse(localStorage.getItem("Stock-data")) ? JSON.parse(localStorage.getItem("Stock-data")) : []
+                if (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        temp = temp + `<tr id='${i}'> <td data-toggle='collapse' data-target="#col_` + i + `" class='collaspeid pl-4''>`
+                            + data[i].stockName + '</button></td><td>' + data[i].etaDate + '</td><td>' + data[i].stockStatus + '</td><td>' + data[i].createdBy + '</td><td>' + data[i].createdDate + '</td><td>' + data[i].note + '</td></td><td class="text-right"><i data-toggle="modal" href="#myModal" class="fa fa-pencil edit mr-2" style="font-size:24px;"></i></td></tr>';
+                    }
+                    document.getElementById('stock').innerHTML = temp;
+                }
+            }
+            function format(d) {
+
+                var i = "";
+                var stock_data = JSON.parse(localStorage.getItem("Stock-data") || "[]");
+
+                var collaspse = [];
+                i = i + ` <table class="table table-sm bg-light border stockcollaspse">
+                                        <tr class="table-secondary">
+                                            <th>#</th>
+                                            <th>Part Number</th>
+                                            <th>Ordered</th>
+                                            <th>Assigned</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>`;
+                if (stock_data) {
+                    for (let i = 0; i < stock_data.length; i++) {
+                        if (stock_data[i].stockName) {
+                            collaspse = stock_data[i].parts;
+                        }
+
+                    }
+
+                    for (let data of collaspse) {
+
+                        i = i + `<tr id="${data.partsid}"><td>${"1"}</td><td>${data.partnum}</td><td>${data.orderd}</td><td>3</td><td class="text-right"><button class="btn" id="btn-del" type="button"  ><i class="fa fa-close" style="font-size:16px"></i></button></td>`;
+
+                        $("body").on('click', '#btn-del', function () {
+                            const id = $(this).parents("tr").attr("id");
+                            var get = JSON.parse(localStorage.getItem("Stock-data"));
+                            console.log(get + "--get");
+                            console.log(parts + "--parts");
+                            console.log(id + "--id");
+                            $(`#${id}`).remove();
+
+                            //if ($("#dvTable tr").length > 1)
+                            //{
+                            //    $("#dvTable tbody").empty();
+                            //}
+                            /*$.fn.displayTable();
+                            $.fn.tableSort();*/
+                            //alert("deleted");
+                        });
+                    }
+                }
+                return i;
+            }
+            var table = $('#tablestock').DataTable({
+                "bLengthChange": false,
+                language: {
+                    search: '',
+                    searchPlaceholder: "Search here..."
+                },
+            });
+            $('#tablestock tbody').on('click', 'td.collaspeid', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+
+                    tr.addClass('shown');
+                }
+            });
+            /* To Edit Stock Data into Local Storage */
+            $("table").on("click", ".edit", function () {
+                editRowId = $(this).parents("tr").attr("id");
+                isEdit = true;
+                let idArray = [];
+                $("#myform input[name='sname'],input[name='date']").each(function (index, el) {
+                    idArray.push($(this).attr("id"));
+                });
+                $("#exampleModal").toggle();
+                let arrayIndex = 0;
+                $(`#${editRowId} td`).each(function (index, el) {
+                    $(`#${idArray[arrayIndex]}`).val($(this).text());
+                    arrayIndex++;
+                });
+            });
+            /* To Add Part Number Data into Local Storage */
+            $("#addstockpart").click(function () {
+                if ($("#partnum").val() !== '' && $("#Ordered").val() !== '' && $("#note").val() !== '') {
+
+                    addstockdataToLocalStorage();
+                    $("#myform2")[0].reset();
+                    $("#myModal2").toggle();
+                } else {
+                    swal("Ooops!", "Fields are empty!", "warning");
+                }
+               
+            });
+            $("#canclestockpart").click(function () {
+                $("#myform2")[0].reset();
+                $("#myform2").trigger('reset');
+            });
+            /* To Add Part Number Data into Local Storage */
+            addstockdataToLocalStorage = function () {
+                cd = (new Date()).toISOString().split('T')[0];
+                var stockName = $("#sname").val();
+                var partsid = stockName + cd;
+                var partnum = $("#partnum").val();
+                var invoice = cd;
+                var orderd = $("#Ordered").val();
+                var notes = $("#note").val();
+                let partsObj = {
+                    partsid: partsid,
+                    partnum: partnum,
+                    invoice: invoice,
+                    orderd: orderd,
+                    notes: notes
+                };
+                partsArray.push(partsObj);
+                for (let j = 0; j < partsArray.length; j++) {
+                    partstr += `<tr id='${partsArray[j].partnum}'><td>${partsArray[j].partnum}</td><td>${partsArray[j].invoice}</td><td>${partsArray[j].orderd}</td>
+                                            <td>${partsArray[j].notes}</td><td>
+                                            <button type='button' class='btn-del' id='btn-del' name='delBtn'>&times</button></td></tr>`
+                    console.log(partstr);
+                } $("#sctockNewTab").append(partstr);
+            }
+        });
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</body>
+</html>

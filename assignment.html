@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <title>ASSIGNMENT</title>
+    <!--Jquery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--select dropdown-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- MDBootstrap Datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.js"></script>
+   
+    <style>
+        .container-fluid {
+            background-color: #f6f6f6;
+        }
+
+        #tableHead {
+            background-color: black;
+            color: white;
+        }
+
+            #tableHead th {
+                font-weight: unset;
+            }
+
+                #tableHead th:first-child {
+                    border-radius: 5px 0 0 0;
+                }
+
+                #tableHead th:last-child {
+                    border-radius: 0 5px 0 0;
+                }
+
+        tbody td:first-child {
+            border-left: 1px solid lightgray;
+        }
+
+        tbody td:last-child {
+            border-right: 1px solid lightgray;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            background-color: white;
+            width: 350px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="container-fluid" style="padding-left:110px;padding-right:110px;" >
+        <div class="row">
+            <div class="col mt-1 mb-0">
+                <h3>Assignment</h3>
+            </div>
+        </div>
+        <!--TABLE-->
+        <span class="table-add float-right mb-1">
+            <button type="button" class="btn bg-primary text-white" id="edit" data-toggle="modal" data-target="#exampleModal">&#x2b; New</button>
+        </span>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form">
+                            <div class="row ">
+                                <div class=" col p-2 form-group">
+                                    <lable for="customer">Choose customer</lable>
+                                    <select class="custom-select form-control" id="customerName">
+                                        <option selected disabled value="">Choose...</option>
+                                        <option value="ericjensen">Eric Jensen</option>
+                                        <option value="kennethwodder">Kenneth Wodder</option>
+                                        <option value="kellymccrory">kellymccrory</option>
+                                        <option value="francesbadger">Frances Badger</option>
+                                    </select>
+                                </div>
+                                <div class="col p-2 form-group">
+                                    <lable for="invoice">Quick book invoice#</lable>
+                                    <select class="custom-select form-control" id="invoice">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class=" col p-2 form-group">
+                                    <lable for="stock">Stock</lable>
+                                    <select class="custom-select form-control" id="stockName">
+                                        <option selected disabled value="">Choose...</option>
+                                        <option value="c100">C100</option>
+                                        <option value="c101">C101</option>
+                                        <option value="c102">C102</option>
+                                        <option value="c103">C103</option>
+                                    </select>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="parts">Parts</label>
+                                    <select class="company form-control" id="drop" multiple="multiple" required>
+                                        <option value="cparts">Choose Parts</option>
+                                        <option value="BW-01-S-M">BW-01-S-M</option>
+                                        <option value="BW-03-XL-G">BW-03-XL-G</option>
+                                        <option value="BW-01-O-M">BW-01-O-M</option>
+                                        <option value="ZK-08-X2P">ZK-08-X2P</option>
+                                        <option value="AP-03-XL-G">AP-03-XL-G</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="button" id="btnAdd" class="btn btn-primary para" value="Add New" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--TABLE-->
+        <table id="paginationFullNumbers" class="table" width="100%">
+            <thead id="tableHead">
+                <tr>
+                    <th class="th-sm">
+                        QB Invoice#
+                    </th>
+                    <th class="th-sm">
+                        Name
+                    </th>
+                    <th class="th-sm">
+                        Created By
+                    </th>
+                    
+                    <th class="th-sm">
+                        Created Date
+                    </th>
+                    
+                    <th class="th-sm">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot><tr></tr></tfoot>
+        </table>
+    </div>
+    <script>
+        //select dropdown
+        $('#invoice').select2();        $('input[type="search"]').css("padding-left", "35px"); 
+        $('#customerName').change(function ()
+        {
+            var selectedText = $(this).find("option:selected").text();
+            var selectedValue = $(this).val();
+            switch (selectedValue) {
+                case 'ericjensen':
+                    names = ["C100", "C200"];
+                    vals = ["c100", "c200"];
+                    AddtoStockDrop(names, vals);
+                    break;
+                case 'kennethwodder':
+                    names = ["C300", "C400"];
+                    vals = ["c300", "c400"];
+                    AddtoStockDrop(names, vals);
+                    break;
+                case 'kellymccrory':
+                    names = ["C500", "C600"];
+                    vals = ["c500", "c600"];
+                    AddtoStockDrop(names, vals);
+                    break;
+
+                case 'francesbadger':
+
+                    names = ["C700", "C800"];
+                    vals = ["c700", "c800"];
+                    AddtoStockDrop(names, vals);
+                    break;
+                default:
+                    names = [];
+                    vals = [];
+                    AddtoStockDrop(names, vals);
+                    break;
+            }
+        });
+        function AddtoStockDrop(invoice, invoiceValue)
+        {
+            add_invoice = "<option selected value='' > Select City ...</option>";
+            for (let i = 0; i < invoice.length; i++)
+            {
+                add_invoice = add_invoice + "<option value='" + invoiceValue[i] + "'>" + invoice[i] + "</option>";
+            }
+            $('#invoice').html(add_invoice);
+        }
+        $('#customerName').select2();
+        $('#invoice').select2();
+        $(function ()
+        {
+            $("#header").load("header.html");
+
+        });
+        $.extend(true, $.fn.dataTable.defaults.oLanguage.oPaginate,
+            {
+            sNext: '<i class="fa fa-chevron-right" ></i>',
+            sPrevious: '<i class="fa fa-chevron-left" ></i>'
+        });
+        $(document).ready(function ()
+        {
+            $('#paginationFullNumbers').dataTable({
+                "paging": true,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bAutoWidth": false,
+                language: { search: '', searchPlaceholder: " Search here..." },
+            });
+            $("#btnAdd").click(function ()
+            {
+                var name = $("#customerName").val().trim();
+                var invoice = $("#invoice").val().trim();
+                var stock = $("#stock").val().trim();
+                let By = JSON.parse(sessionStorage.getItem('user'));
+                const createdBy = By[0];
+                var parts = $("#drop").val();
+                if (name != "" && invoice != "" && stock != "" && parts != "")
+                { // validation
+                    if ($("#paginationFullNumbers tbody").children().children().length == 1)
+                    {
+                        $("#paginationFullNumbers tbody").html("");
+                    }
+                    var srNo = $("#paginationFullNumbers tbody").children().length + 1;
+                    // creating dynamic html string
+                    var dynamicTr = "<tr><td>" + name + "</td><td>" + invoice + "</td><td>" + stock + "</td><td>" + parts + "</td><td><button class='btn btn-white btn-sm btn-edit' > <i class='fas fa-pencil-alt'></i> </button> <button class='btn btn-white btn-sm btn-delete' ><i class='fa fa-close'></i> </button> </td></tr>";
+                    $("#paginationFullNumbers tbody").append(dynamicTr); // appending dynamic string to table tbody
+                    $("#customerName").val("");
+                    $("#invoice").val("");
+                    $("#stock").val("");
+                    $("#drop").val("");
+                    $(".btn-delete").click(function ()
+                    { // registering function for delete button
+                        $(this).parent().parent().remove();
+                        if ($("#paginationFullNumbers tbody").children().children().length == 0) {
+                            $("#paginationFullNumbers tbody").append(emptyRow);
+                        }
+                    });
+                } else
+                {
+                    alert("Please provide values");
+                }
+            });
+        });
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        });
+    </script>
+</body>
+</html>
